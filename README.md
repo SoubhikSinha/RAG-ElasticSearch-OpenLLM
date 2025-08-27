@@ -1,1 +1,1 @@
-# Rag-System--Elastic-Open-LLM-
+# RAB System (ElasticSearch + Open LLM)
