@@ -333,7 +333,7 @@ docker run -d \
 
 <br>
 
-Verify Installation:
+Verify Installation:<br>
 [ ElasticSearch ]
 ```bash
 curl http://localhost:9200/
