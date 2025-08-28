@@ -5,7 +5,7 @@ from PyPDF2 import PdfReader
 import dotenv
 
 dotenv.load_dotenv()
-FOLDER_URL = os.getenv("GOOGLE_DRIVE_FOLDER_URL")
+FOLDER_URL = os.getenv("GOOGLE_DRIVE_FOLDER_URL")  # Google Drive folder URL
 
 def download_pdfs_from_gdrive(folder_url: str, output_dir: str = "data/pdfs") -> str:
     if os.path.exists(output_dir) and len(os.listdir(output_dir)) > 0:
@@ -13,7 +13,7 @@ def download_pdfs_from_gdrive(folder_url: str, output_dir: str = "data/pdfs") ->
         return output_dir
     else:
         import gdown
-        gdown.download_folder(folder_url, output=output_dir, quiet=False, use_cookies=False)
+        gdown.download_folder(folder_url, output=output_dir, quiet=False, use_cookies=False)  # Download PDFs from Google Drive
         return output_dir
 
 

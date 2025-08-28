@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 FOLDER_URL = os.getenv("GOOGLE_DRIVE_FOLDER_URL")
 
 class Indexer:
-    def __init__(self, index_name="rag_docs", es_url="http://localhost:9200"):
+    def __init__(self, index_name="rag_docs", es_url="http://localhost:9200"): # Adjusted for ES 9.1.2
         self.index_name = index_name
         self.es = Elasticsearch(es_url, verify_certs=False)
         self.model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
@@ -23,7 +23,7 @@ class Indexer:
             print(f"Index {self.index_name} already exists. Deleting...")
             self.es.indices.delete(index=self.index_name)
 
-        mapping = {
+        mapping = {  # Mapping for ES 9.1.2
             "mappings": {
                 "properties": {
                     "id": {"type": "keyword"},
@@ -32,7 +32,7 @@ class Indexer:
                     "chunk_id": {"type": "integer"},
                     "text": {"type": "text"},  # BM25 search
                     "text_expansion": {"type": "rank_features"},  # ELSER placeholder
-                    "dense_vector": {
+                    "dense_vector": {  # Dense vector for semantic search
                         "type": "dense_vector",
                         "dims": self.embedding_dim,
                         "index": True,
@@ -59,7 +59,6 @@ class Indexer:
                 "chunk_id": doc["chunk_id"],
                 "text": doc["text"],
 
-                # In real Elastic Cloud, you'd populate this with ELSER expansion
                 "text_expansion": {"dummy_feature": 1.0},
 
                 "dense_vector": dense_vector
@@ -73,7 +72,7 @@ class Indexer:
 if __name__ == "__main__":
     from rag.ingestion import process_pdfs
 
-    local_dir = "data/pdfs"   # Assuming PDFs already downloaded manually
+    local_dir = "data/pdfs"
     docs = process_pdfs(local_dir, FOLDER_URL)
 
     indexer = Indexer()
