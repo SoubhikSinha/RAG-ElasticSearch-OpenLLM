@@ -41,6 +41,7 @@ In short: _a plug-and-play RAG system that shows how to combine Elastic’s sear
   - [Run Ingestion](#run-ingestion)
   - [Start API](#start-api)
   - [Launch UI](#launch-ui)
+- [🧪 Testing](#-testing)
 - [📂 Project Structure](#-project-structure)
 - [🙏 Acknowledgments](#-acknowledgments)
 
@@ -431,6 +432,26 @@ You’ll see:
 -   **Top-k slider** → Adjust how many chunks are retrieved (default = 5).
 -   **Answer panel** → Displays grounded response from **Mistral (via Ollama)**.
 -   **Citations** → Show filename, snippet, and Google Drive link for each supporting chunk.
+
+<br>
+
+## 🧪 Testing
+This project includes **pytest-based unit tests** to validate ingestion, retrieval, and system performance.
+<br>
+
+#### 🔹 Run All Tests
+From the project root, run:
+```bash
+pytest -v
+```
+`-v` → verbose mode (shows each test and result).
+<br>
+
+#### Test Coverage
+-   **`test_ingestion.py`** → Verifies PDF text extraction, chunking, and metadata creation.
+-   **`test_retrieval.py`** → Ensures BM25, ELSER, Dense, and Hybrid retrieval return results correctly.
+-   **`tests_latency.py`** → Benchmarks end-to-end query latency (retrieval + generation).
+✅ If all tests pass, your ingestion → indexing → retrieval pipeline is working as expected.
 
 <br>
 
