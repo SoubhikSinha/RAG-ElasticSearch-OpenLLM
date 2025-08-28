@@ -451,6 +451,8 @@ pytest -v
 -   **`test_ingestion.py`** → Verifies PDF text extraction, chunking, and metadata creation.
 -   **`test_retrieval.py`** → Ensures BM25, ELSER, Dense, and Hybrid retrieval return results correctly.
 -   **`tests_latency.py`** → Benchmarks end-to-end query latency (retrieval + generation).
+<br>
+
 ✅ If all tests pass, your ingestion → indexing → retrieval pipeline is working as expected.
 
 <br>
