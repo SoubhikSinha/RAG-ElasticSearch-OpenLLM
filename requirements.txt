@@ -1,0 +1,15 @@
+fastapi 
+uvicorn 
+streamlit 
+elasticsearch
+sentence-transformers 
+PyPDF2 
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
+gdown
+transformers 
+accelerate 
+torch 
+sentencepiece
+eland
