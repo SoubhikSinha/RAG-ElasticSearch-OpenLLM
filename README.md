@@ -208,6 +208,49 @@ The system is designed as a modular pipeline, where each stage is independent bu
 <br>
 
 ## 🛠 Tech Stack
+### 🔹 Core Infrastructure
+-   **[Elasticsearch 9.1.2](https://www.elastic.co/elasticsearch/?utm_source=chatgpt.com)** → Search backbone, powering BM25, ELSER (sparse semantic search), and dense vector retrieval.
+-   **[Kibana 9.1.2](https://www.elastic.co/kibana/?utm_source=chatgpt.com)** → Monitoring, querying, and visualizing ingestion and retrieval pipelines.
+-   **Docker / Docker Compose** → Containerized deployment of Elasticsearch, Kibana, API, and UI services.
+    
+----------
+
+### 🔹 Machine Learning & Retrieval
+-   **ELSER** → Elastic’s Learned Sparse Encoder for semantic sparse retrieval (`text_expansion`).
+-   **sentence-transformers/all-MiniLM-L6-v2** → Dense embeddings (384-dimensional vectors) for semantic similarity search.
+-   **Reciprocal Rank Fusion (RRF)** → Hybrid ranking strategy combining BM25, ELSER, and dense vectors.
+    
+----------
+
+### 🔹 Answer Generation
+-   **Ollama** → Local LLM runtime for running open models efficiently on Mac.
+-   **Mistral** → Lightweight, high-performance open LLM used via Ollama for grounded answer generation.
+-   Guardrails ensure answers are safe, relevant, and fallback to _“I don’t know”_ if evidence is weak.
+    
+----------
+
+### 🔹 Backend & API
+-   **FastAPI** → REST API with endpoints for querying (`/query`), ingestion (`/ingest`), and health checks (`/healthz`).
+-   **Uvicorn** → ASGI server for FastAPI.
+
+----------
+
+### 🔹 Frontend & UI
+-   **Streamlit** → Lightweight web interface for user queries, answers, and citations.
+    
+----------
+
+### 🔹 Data Processing
+-   **[PyPDF2](https://pypi.org/project/pypdf2/?utm_source=chatgpt.com)** → Extract text from PDFs.
+-   **[gdown](https://github.com/wkentaro/gdown?utm_source=chatgpt.com)** → Download files and folders from Google Drive.
+-   **[python-dotenv](https://pypi.org/project/python-dotenv/?utm_source=chatgpt.com)** → Manage environment variables securely (`.env`).
+    
+----------
+
+### 🔹 Language & Runtime
+-   **Python 3.10+** → Core language for ingestion, indexing, retrieval, and orchestration.
+
+<br>
 
 ## ⚙️ Setup Instructions
 ### Prerequisites
