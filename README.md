@@ -436,8 +436,9 @@ You’ll see:
 
 ## 📂 Project Structure
 The repository is organized as follows:
-RAG-ElasticSearch-OpenLLM/
 ```bash
+RAG-ElasticSearch-OpenLLM/
+│
 ├── data/pdfs/              # Source PDFs (downloaded from Google Drive)
 ├── rag/                    # Core RAG modules
 │   ├── api.py              # FastAPI backend
