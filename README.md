@@ -51,8 +51,9 @@ In short: _a plug-and-play RAG system that shows how to combine Elastic’s sear
 <br>
 
 ## 📸 Demo
-<img src="https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM/blob/main/DemoPics/Screenshot%202025-08-28%20at%2018.16.46.png" width="45%" />
-  <img src="https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM/blob/main/DemoPics/Screenshot%202025-08-28%20at%2018.20.11.png" width="45%" />
+<img src="https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM/blob/main/DemoPics/Screenshot%202025-08-28%20at%2018.16.46.png" width="100%" />
+<img src="https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM/blob/main/DemoPics/Screenshot%202025-08-28%20at%2018.20.11.png" width="100%" />
+<img src="https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM/blob/main/DemoPics/Screenshot%202025-08-28%20at%2018.25.39.png" width="100%" />
 
 <br>
 
