@@ -349,8 +349,75 @@ Use `--platform=linux/amd64` (already added above) since **Elastic ML features (
 <br>
 
 ### Run Ingestion
+Once Elasticsearch and Kibana are running, execute the following commands to load documents, index them, and test retrieval.
+```bash
+# 1. Ingest PDFs (download from Google Drive, extract text, split into chunks)
+python -m rag.ingestion.py
+
+# 2. Index chunks into Elasticsearch (BM25, ELSER, Dense vectors)
+python -m rag.indexing.py
+
+# 3. Run retrieval tests (BM25-only, ELSER-only, Dense-only, Hybrid with RRF)
+python -m rag.retrieval.py
+
+# 4. Generate answers using Ollama Mistral (LLM-powered answer generation)
+python -m rag.generation.py
+```
+
+<br>
+
 ### Start API
+The backend is powered by **FastAPI**, exposing endpoints for querying, ingestion, and health checks.
+<br>
+#### 🔹 Run the API server
+From the project root, start the FastAPI app with:
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+-   `--reload` → auto-restarts the server on code changes
+-   API will be available at → [http://localhost:8000](http://localhost:8000)
+-   Interactive API docs at → [http://localhost:8000/docs](http://localhost:8000/docs)
+<br>
+
+#### 🔹 API Endpoints
+-   `POST /query` → Ask a question, get an answer with citations
+-   `POST /ingest` → Re-ingest documents from Google Drive
+-   `GET /healthz` → Health check
+<br>
+
+#### 🔹 Example Requests
+**Health check**
+```bash
+curl -X GET "http://localhost:8000/healthz"
+```
+**Run ingestion**
+```bash
+curl -X POST "http://localhost:8000/ingest"
+```
+**Ask a question**
+```bash
+curl -X POST "http://localhost:8000/query" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What does Retrieval-Augmented Generation mean?"}'
+```
+**Sample Response**
+```bash
+{
+  "answer": "Retrieval-Augmented Generation (RAG) is an approach where a large language model uses external documents retrieved from a search system to ground its responses.",
+  "citations": [
+    {
+      "filename": "rag_paper.pdf",
+      "drive_url": "https://drive.google.com/file/xxx",
+      "snippet": "Retrieval-Augmented Generation combines..."
+    }
+  ]
+}
+```
+
+<br>
+
 ### Launch UI
+
 
 ## 🔎 Usage
 ## 📂 Project Structure
