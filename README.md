@@ -142,6 +142,71 @@ In short: this repository shows how to build a **scalable, explainable, and deve
 <br>
 
 ## 🏗️ Architecture
+The system is designed as a modular pipeline, where each stage is independent but seamlessly connected.
+
+1.  **Ingestion**
+    -   PDFs are fetched from a shared **Google Drive folder**.
+    -   Text is extracted, split into ~300-token overlapping chunks.
+    -   Each chunk is enriched with metadata: filename, Drive URL, chunk ID.
+2.  **Indexing**
+    -   **BM25**: raw text stored in a `text` field for classic keyword search.
+    -   **ELSER**: chunks expanded into sparse semantic features (`text_expansion`) using Elastic’s ML model.
+    -   **Dense Embeddings**: vectors generated with `all-MiniLM-L6-v2` for semantic similarity.
+    -   Unified index in **Elasticsearch 9.1.2** stores all signals.  
+3.  **Retrieval**
+    -   **BM25-only**: keyword search.
+    -   **ELSER-only**: semantic sparse retrieval.  
+    -   **Dense-only**: embedding similarity search.
+    -   **Hybrid**: Reciprocal Rank Fusion (RRF) combining BM25 + ELSER + Dense for maximum recall.  
+4.  **Answer Generation**
+    -   Top-k results are merged into a context window.
+    -   A local/open **LLM (HuggingFace / Ollama)** generates an answer grounded in evidence.
+    -   If context is weak → system responds with _“I don’t know.”_
+    -   Guardrails enforce safe, relevant outputs. 
+5.  **Serving Layer**
+    -   **FastAPI** backend exposes REST endpoints:
+        -   `POST /ingest` → (re)load & index Drive docs
+        -   `POST /query` → answer a question with citations 
+        -   `GET /healthz` → health check
+    -   **Streamlit UI**: interactive front-end for querying, answer display, citation visualization, and retrieval-mode toggling.
+
+<br>
+
+### High-Level Flow (ASCII Diagram)
+                ┌───────────────────────────┐
+                │     Google Drive PDFs     │
+                └─────────────┬─────────────┘
+                              │
+                     Ingestion & Chunking
+                              │
+                ┌─────────────▼─────────────┐
+                │   Elasticsearch Index     │
+                │ ───────────────────────── │
+                │  • BM25 (text field)      │
+                │  • ELSER (sparse vectors) │
+                │  • Dense vectors (MiniLM) │
+                └─────────────┬─────────────┘
+                              │
+                     Retrieval Strategies
+       ┌───────────────┬───────────────┬───────────────┐
+       │               │               │               │
+    BM25-only      ELSER-only      Dense-only       Hybrid (RRF)
+       └───────────────┴───────────────┴───────────────┘
+                              │
+                        Top-k Results
+                              │
+                ┌─────────────▼─────────────┐
+                │     Answer Generator      │
+                │ (HuggingFace / Ollama LLM)│
+                └─────────────┬─────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+    FastAPI API           Streamlit UI          Kibana Monitoring
+
+
+<br>
+
 ## 🛠 Tech Stack
 
 ## ⚙️ Setup Instructions
