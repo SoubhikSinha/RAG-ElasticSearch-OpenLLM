@@ -78,8 +78,66 @@ In short: this repository shows how to build a **scalable, explainable, and deve
 
 <br>
 
-
 ## ⚡ Features
+### 📂 Ingestion
+-   **Google Drive Integration** – Seamlessly load PDFs from a shared Drive folder.
+-   **Text Extraction** – Parse PDF content using `PyPDF2` (with OCR-ready hooks for scanned files).
+-   **Smart Chunking** – Split text into ~300-token segments with overlap for context retention.
+-   **Rich Metadata** – Each chunk stores filename, Drive URL, and chunk ID for traceability.
+    
+----------
+
+### 🧠 Indexing
+-   **BM25 Baseline** – Store raw text in a `text` field for keyword search.
+-   **ELSER Encoding** – Expand text into sparse semantic features (`text_expansion`) using Elastic’s ML model.
+-   **Dense Embeddings** – Encode chunks with `sentence-transformers/all-MiniLM-L6-v2` for neural similarity.
+-   **Unified Index** – All signals live in a single index with explicit mappings.
+
+----------
+
+
+### 🔍 Retrieval
+-   **BM25-only Mode** – Classic keyword-based retrieval for exact lexical matches.
+-   **ELSER-only Mode** – Semantic sparse retrieval using Elastic’s ML-powered encoder.
+- **Dense-only Mode** – Neural retrieval using `sentence-transformers/all-MiniLM-L6-v2` embeddings with cosine similarity.
+-   **Hybrid Mode** – Reciprocal Rank Fusion (RRF) combining BM25, ELSER, and dense embeddings for maximum recall and precision.
+-   **Configurable Top-k** – Adjustable candidate size (`k`, default = 5).
+    
+----------
+
+### 💬 Answer Generation
+-   **Local/Open LLMs** – Integrate with Ollama backend.
+-   **Grounded Prompts** – Answers are constructed only from retrieved context.
+-   **Hallucination Control** – If no strong evidence is found, respond with _“I don’t know.”_
+-   **Guardrails** – Reject unsafe, harmful, or off-topic queries.
+    
+----------
+
+### ⚡ API
+-   **FastAPI Endpoints** –
+    -   `POST /query` → submit a question, get answer + citations.
+    -   `POST /ingest` → re-index documents from Google Drive.
+    -   `GET /healthz` → health check.
+-   **JSON-first Design** – Easy integration with downstream apps.
+    
+----------
+
+### 🎨 UI
+
+-   **Streamlit Frontend** – Clean web interface for interactive exploration.
+-   **Question Box** – Type any question, see instant answers.
+-   **Citations** – Display title, snippet, and Drive link for each supporting doc.
+-   **Retrieval Toggle** – Switch between ELSER-only and Hybrid retrieval modes.
+    
+----------
+
+### 🔒 Reliability & Scalability
+-   **Dockerized Stack** – Elasticsearch 9.1.2 + Kibana + FastAPI + Streamlit, all container-ready.
+-   **ML-enabled Nodes** – Runs ELSER seamlessly inside Elastic’s ML runtime.
+-   **Extensible Design** – Plug in new embedding models, ingestion sources, or UIs without re-architecture.
+
+<br>
+
 ## 🏗️ Architecture
 ## 🛠 Tech Stack
 
