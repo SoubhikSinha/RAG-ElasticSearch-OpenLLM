@@ -463,7 +463,19 @@ RAG-ElasticSearch-OpenLLM/
 └── requirements.txt        # Python dependencies
 ```
 
-
 <br>
 
 ## 🙏 Acknowledgments
+This project was made possible thanks to the contributions of the open-source community and the following tools & resources:
+-   **[Elasticsearch](https://www.elastic.co/elasticsearch/?utm_source=chatgpt.com)** → The backbone of hybrid retrieval (BM25, ELSER, dense vectors).
+-   **[Kibana](https://www.elastic.co/kibana/?utm_source=chatgpt.com)** → For visualizing, managing ML models, and monitoring pipelines.
+-   **[ELSER (Elastic Learned Sparse Encoder)](https://www.elastic.co/guide/en/machine-learning/current/ml-nlp-elser.html?utm_source=chatgpt.com)** → Elastic’s semantic sparse retrieval model.
+-   **Sentence Transformers** → For dense embeddings (`all-MiniLM-L6-v2`).
+-   **Ollama** → Lightweight local runtime for LLMs on Mac.
+-   **Mistral** → Open LLM used for grounded answer generation.
+-   **FastAPI** → For building the backend APIs.
+-   **Streamlit** → For building an interactive and lightweight UI. 
+-   **[PyPDF2](https://pypi.org/project/pypdf2/?utm_source=chatgpt.com)** and **[gdown](https://github.com/wkentaro/gdown?utm_source=chatgpt.com)** → For ingestion of PDFs from Google Drive.
+-   **[python-dotenv](https://pypi.org/project/python-dotenv/?utm_source=chatgpt.com)** → For managing environment variables.
+-   The **open-source ML community** for inspiring the design of hybrid retrieval pipelines.
+-   Special thanks to the **Elastic team** and **Hugging Face community** for their extensive documentation and pre-trained models.
