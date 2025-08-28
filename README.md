@@ -41,11 +41,7 @@ In short: _a plug-and-play RAG system that shows how to combine Elastic’s sear
   - [Run Ingestion](#run-ingestion)
   - [Start API](#start-api)
   - [Launch UI](#launch-ui)
-- [🔎 Usage](#-usage)
 - [📂 Project Structure](#-project-structure)
-- [🗺 Roadmap](#-roadmap)
-- [🤝 Contributing](#-contributing)
-- [📜 License](#-license)
 - [🙏 Acknowledgments](#-acknowledgments)
 
 <br>
@@ -417,11 +413,57 @@ curl -X POST "http://localhost:8000/query" \
 <br>
 
 ### Launch UI
+This project includes a **Streamlit web app** for interactive querying.  
+It lets you type in questions, toggle retrieval modes, and view answers with citations — all in a simple browser interface.
+#### 🔹 Run the Streamlit app
+From the project root, start the UI with:
+```bash
+streamlit run ui/app.py
+```
+<br>
 
 
-## 🔎 Usage
+#### 🔹 Access the UI
+Open your browser at → [http://localhost:8501](http://localhost:8501)
+You’ll see:
+-   **Input box** → Ask any question.
+-   **Toggle switch** → Choose retrieval mode (BM25-only, ELSER-only, Dense-only, Hybrid).
+-   **Top-k slider** → Adjust how many chunks are retrieved (default = 5).
+-   **Answer panel** → Displays grounded response from **Mistral (via Ollama)**.
+-   **Citations** → Show filename, snippet, and Google Drive link for each supporting chunk.
+
+<br>
+
 ## 📂 Project Structure
-## 🗺 Roadmap
-## 🤝 Contributing
-## 📜 License
+The repository is organized as follows:
+RAG-ElasticSearch-OpenLLM/
+```bash
+├── data/pdfs/              # Source PDFs (downloaded from Google Drive)
+├── rag/                    # Core RAG modules
+│   ├── api.py              # FastAPI backend
+│   ├── generation.py       # LLM answer generation (Ollama Mistral)
+│   ├── guardrails.py       # Query safety filters
+│   ├── indexing.py         # Indexing pipeline (BM25, ELSER, Dense vectors)
+│   ├── ingestion.py        # Ingestion pipeline (PDFs → text → chunks)
+│   ├── retrieval.py        # Retrieval logic (BM25, ELSER, Dense, Hybrid RRF)
+│   ├── ui.py               # Streamlit web UI
+│   └── __init__.py
+│
+├── tests/                  # Unit tests
+│   ├── test_ingestion.py   # Validate PDF ingestion & chunking
+│   ├── test_retrieval.py   # Validate retrieval modes
+│   ├── tests_latency.py    # Benchmark search & generation latency
+│   └── __init__.py
+│
+├── venv/                   # Virtual environment (not tracked in git)
+├── .env                    # Environment variables (Drive folder, ES URL, Ollama config)
+├── .gitignore              # Git ignore rules
+├── main.py                 # Entry point (optional orchestration)
+├── README.md               # Project documentation
+└── requirements.txt        # Python dependencies
+```
+
+
+<br>
+
 ## 🙏 Acknowledgments
