@@ -281,8 +281,73 @@ Before you begin, make sure you have:
 <br>
 
 ### Clone the Repository
+Start by cloning the project repository from GitHub and navigating into it:
+```bash
+git clone https://github.com/SoubhikSinha/RAG-ElasticSearch-OpenLLM.git
+cd RAG-ElasticSearch-OpenLLM
+```
+
+<br>
+
 ### Environment Setup
+It’s recommended to create an isolated Python environment to avoid dependency conflicts:
+```bash
+conda create --prefix ./rag-elastic python=3.12 -y
+conda activate rag-elastic/
+```
+Install all required packages from `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+<br>
+
 ### Start Elasticsearch + Kibana
+Run with Docker - Start a single-node Elasticsearch instance:
+```bash
+docker pull docker.elastic.co/elasticsearch/elasticsearch:9.1.2
+
+docker run -d \
+  --name es-rag \
+  -p 9200:9200 \
+  -e "discovery.type=single-node" \
+  -e "xpack.security.enabled=false" \
+  --platform=linux/amd64 \
+  docker.elastic.co/elasticsearch/elasticsearch:9.1.2
+```
+Then start Kibana:
+```bash
+docker pull docker.elastic.co/kibana/kibana:9.1.2
+
+docker run -d \
+  --name kibana-rag \
+  -p 5601:5601 \
+  -e "ELASTICSEARCH_HOSTS=http://es-rag:9200" \
+  --link es-rag:es-rag \
+  --platform=linux/amd64 \
+  docker.elastic.co/kibana/kibana:9.1.2
+```
+
+-   Elasticsearch → [http://localhost:9200](http://localhost:9200)
+-   Kibana → [http://localhost:5601](http://localhost:5601)
+
+<br>
+
+Verify Installation:
+[ ElasticSearch ]
+```bash
+curl http://localhost:9200/
+```
+[ Kibana ]
+Visit → [http://localhost:5601](http://localhost:5601)
+
+<br>
+
+⚠️ **Note for Mac M1/M2/M3 users:**  
+Use `--platform=linux/amd64` (already added above) since **Elastic ML features (ELSER)** are not fully supported on `arm64` images.
+
+<br>
+
 ### Run Ingestion
 ### Start API
 ### Launch UI
