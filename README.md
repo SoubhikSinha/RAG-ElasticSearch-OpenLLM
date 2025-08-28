@@ -254,6 +254,32 @@ The system is designed as a modular pipeline, where each stage is independent bu
 
 ## ⚙️ Setup Instructions
 ### Prerequisites
+This project was built and tested on a **MacBook M3 (Apple Silicon, ARM64)**.  
+It should run on other systems (Linux, Windows) with minor adjustments, but Apple Silicon users should pay special attention to the `--platform=linux/amd64` flag when running Elasticsearch/Kibana, since **ML features (ELSER)** are not fully supported in the ARM builds.
+<br>
+
+Before you begin, make sure you have:
+-   **[Docker Desktop](https://www.docker.com/)** (latest version)
+    -   Required to run **Elasticsearch 9.1.2** and **Kibana 9.1.2** containers.
+    -   Allocate at least **6–8 GB of RAM** to Docker for ML models (ELSER) to load properly.
+-   **[Anaconda](https://www.anaconda.com) / Miniconda**
+    -   Recommended for creating an isolated Python environment.
+-   **Python 3.10+** (managed via Anaconda or pyenv)
+    -   Required to run ingestion, indexing, and API/UI code.
+-   **VS Code** (optional) or any code editor
+    -   Not required, but useful for exploring and modifying the source code.
+-   **[Ollama](https://ollama.com/)** installed locally
+    -   To run the **Mistral LLM** for answer generation.
+		   ```bash
+	    ollama pull mistral
+	    ```
+    -   Verify installation with:
+	    ```bash
+	    ollama run mistral "Hello
+	    ```
+
+<br>
+
 ### Clone the Repository
 ### Environment Setup
 ### Start Elasticsearch + Kibana
