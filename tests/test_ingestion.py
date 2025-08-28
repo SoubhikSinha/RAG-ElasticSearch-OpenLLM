@@ -1,11 +1,12 @@
 import os
+import pytest
 from rag.ingestion import download_pdfs_from_gdrive, process_pdfs
-
 import dotenv
 
 dotenv.load_dotenv()
 FOLDER_URL = os.getenv("GOOGLE_DRIVE_FOLDER_URL")
 
+@pytest.mark.skipif(FOLDER_URL is None, reason="Google Drive folder URL not set in .env")
 def test_ingestion():
     # Step 1: Download PDFs
     local_dir = download_pdfs_from_gdrive(FOLDER_URL)
@@ -22,9 +23,3 @@ def test_ingestion():
     assert "drive_url" in sample, "Missing drive url"
     assert "chunk_id" in sample, "Missing chunk id"
     assert "text" in sample and len(sample["text"]) > 0, "Empty text in chunk"
-
-    print(f"✅ Ingestion Test Passed: {len(docs)} chunks extracted across PDFs")
-    print(f"Example chunk: {sample}")
-
-if __name__ == "__main__":
-    test_ingestion()
