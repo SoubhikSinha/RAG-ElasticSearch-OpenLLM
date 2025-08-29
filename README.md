@@ -369,7 +369,7 @@ The backend is powered by **FastAPI**, exposing endpoints for querying, ingestio
 #### 🔹 Run the API server
 From the project root, start the FastAPI app with:
 ```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn rag.api:app --port 8000 --reload
 ```
 -   `--reload` → auto-restarts the server on code changes
 -   API will be available at → [http://localhost:8000](http://localhost:8000)
