@@ -272,7 +272,7 @@ Before you begin, make sure you have:
 	    ```
     -   Verify installation with:
 	    ```bash
-	    ollama run mistral "Hello
+	    ollama run mistral "Hello"
 	    ```
 
 <br>
