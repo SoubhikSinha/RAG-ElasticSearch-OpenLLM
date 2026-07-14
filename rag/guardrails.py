@@ -64,4 +64,3 @@ class Guardrails:
         overlap = sum(1 for word in answer.lower().split() if word in context_text)
 
         return max_sim >= threshold or overlap > 5
-
